@@ -1,0 +1,41 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model DailyWorkout {
+  id     Int    @id @default(autoincrement())
+  name   String @unique @db.VarChar(255)
+  sets   Int
+  reps   Int
+  dateId Int
+  date   Date   @relation(fields: [dateId], references: [id])
+}
+
+model Date {
+  id           Int            @id @default(autoincrement())
+  weekId       Int
+  week         Week           @relation(fields: [weekId], references: [id])
+  DailyWorkout DailyWorkout[]
+}
+
+model Week {
+  id     Int    @id @default(autoincrement())
+  userId Int
+  user   User   @relation(fields: [userId], references: [id])
+  dates  Date[]
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  username String @unique @db.VarChar(255)
+  password String @db.VarChar(255)
+  weeks    Week[]
+}
