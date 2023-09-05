@@ -8,7 +8,7 @@ async function main() {
     data: {
       username: `admin`,
       password: await bcrypt.hash(`admin123`, 10),
-      idAdmin: true,
+      isAdmin: true,
     },
   });
 
