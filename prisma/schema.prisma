@@ -10,42 +10,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Exercise_Set {
-  id         Int      @id @default(autoincrement())
-  exerciseId Int
-  exercise   Exercise @relation(fields: [exerciseId], references: [id])
-  setId      Int
-  sets       Set      @relation(fields: [setId], references: [id])
-}
-
 model Set {
-  id           Int            @id @default(autoincrement())
-  set          Int
-  reps         Int
-  Exercise_Set Exercise_Set[]
-}
-
-model Day_Exercise {
   id         Int      @id @default(autoincrement())
-  dayId      Int
-  day        Day      @relation(fields: [dayId], references: [id])
+  set        Int
+  weight     Int
+  reps       Int
+  exercise   Exercise @relation(fields: [exerciseId], references: [id])
   exerciseId Int
-  exercises  Exercise @relation(fields: [exerciseId], references: [id])
 }
 
 model Exercise {
-  id           Int            @id @default(autoincrement())
-  name         String         @unique @db.VarChar(255)
-  Exercise_Set Exercise_Set[]
-  Day_Exercise Day_Exercise[]
+  id   Int    @id @default(autoincrement())
+  name String @unique @db.VarChar(255)
+  days Day[]
+  sets Set[]
 }
 
 model Day {
-  id           Int            @id @default(autoincrement())
-  date         DateTime       @unique
-  weekId       Int
-  week         Week           @relation(fields: [weekId], references: [id])
-  Day_Exercise Day_Exercise[]
+  id        Int        @id @default(autoincrement())
+  date      DateTime   @unique @default(now()) @db.Date
+  weeks     Week[]
+  exercises Exercise[]
 }
 
 model Week {
