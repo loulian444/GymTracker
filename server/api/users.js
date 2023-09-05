@@ -77,6 +77,22 @@ router.put(`/:id`, async (req, res) => {
 
 router.delete(`/:id`, async (req, res) => {
   try {
+    const deleteSets = await prisma.set.deleteMany({
+      where: {
+        exercise: {
+          days: {
+            some: {
+              weeks: {
+                some: {
+                  userId: Number(req.params.id),
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
     const deleteWeek = await prisma.week.deleteMany({
       where: {
         userId: Number(req.params.id),
@@ -90,7 +106,7 @@ router.delete(`/:id`, async (req, res) => {
     });
 
     const transaction = await prisma.$transaction([
-      // deleteDay,
+      deleteSets,
       deleteWeek,
       deleteUser,
     ]);
