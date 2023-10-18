@@ -42,9 +42,13 @@ model Week {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  username String  @unique @db.VarChar(255)
-  password String  @db.VarChar(255)
-  isAdmin  Boolean @default(false)
+  id       Int      @id @default(autoincrement())
+  name     String   @db.VarChar(255)
+  birthday DateTime @db.Date
+  height   Int
+  weight   Int
+  username String   @unique @db.VarChar(255)
+  password String   @db.VarChar(255)
+  isAdmin  Boolean  @default(false)
   weeks    Week[]
 }

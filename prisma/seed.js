@@ -9,6 +9,10 @@ async function main() {
       username: `admin`,
       password: await bcrypt.hash(`admin123`, 10),
       isAdmin: true,
+      name: "El Bic Boi",
+      birthday: `2023-01-01T00:00:00.000Z`,
+      height: 75,
+      weight: 180,
     },
   });
 
@@ -16,6 +20,10 @@ async function main() {
     data: {
       username: `lou`,
       password: await bcrypt.hash(`lou123`, 10),
+      name: "Loulian Liu",
+      birthday: `1997-06-18T00:00:00.000Z`,
+      height: 67,
+      weight: 172,
       weeks: {
         create: {
           week: 1,
