@@ -4,6 +4,7 @@ const { requireUser } = require("./utils");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
+// Get all users
 router.get(`/`, async (req, res) => {
   try {
     const allUsers = await prisma.user.findMany({
@@ -26,7 +27,8 @@ router.get(`/`, async (req, res) => {
   }
 });
 
-router.get(`/:id`, async (req, res) => {
+// Get user by a specific id. Shows password if the user searched is the same as current user
+router.get(`/:id`, requireUser, async (req, res) => {
   try {
     if (req.userId === Number(req.params.id)) {
       const user = await prisma.user.findUnique({
@@ -63,6 +65,7 @@ router.get(`/:id`, async (req, res) => {
   }
 });
 
+// Updates user by id if permitted
 router.put(`/:id`, requireUser, async (req, res) => {
   try {
     if (req.userId === Number(req.params.id) || req.isAdmin) {
@@ -84,7 +87,8 @@ router.put(`/:id`, requireUser, async (req, res) => {
   }
 });
 
-router.delete(`/:id`, async (req, res) => {
+// Deletes user by id and all information realted to user if permitted
+router.delete(`/:id`, requireUser, async (req, res) => {
   try {
     if (req.userId === Number(req.params.id) || req.isAdmin) {
       const deleteSets = await prisma.set.deleteMany({
@@ -130,7 +134,7 @@ router.delete(`/:id`, async (req, res) => {
         .send({ error: true, message: `Not authorized to delete user` });
     }
   } catch (error) {
-    res.send({ error });
+    res.status(500).send({ error });
   }
 });
 
