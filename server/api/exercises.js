@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { requireUser } = require("./utils");
+const { requireUser, requireAdmin } = require("./utils");
 
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
@@ -59,7 +59,7 @@ router.post(`/`, requireUser, async (req, res) => {
 });
 
 // Deletes an exercise by id and all related sets if user is admin
-router.delete(`/:id`, async (req, res) => {
+router.delete(`/:id`, requireAdmin, async (req, res) => {
   try {
     const deleteSets = await prisma.set.deleteMany({
       where: {
