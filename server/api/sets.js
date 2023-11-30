@@ -23,8 +23,12 @@ router.get(`/`, async (req, res) => {
       },
       include: {
         exercise: {
-          select: {
-            name: true,
+          include: {
+            days: {
+              include: {
+                weeks: true,
+              },
+            },
           },
         },
       },
@@ -41,20 +45,24 @@ router.get(`/`, async (req, res) => {
 // Gets a specific set by the id
 router.get(`/:id`, requireUser, async (req, res) => {
   try {
-    if (req.userId === Number(req.params.id)) {
-      const set = await prisma.set.findUnique({
-        where: {
-          id: Number(req.params.id),
-        },
-        include: {
-          exercise: {
-            select: {
-              name: true,
+    const set = await prisma.set.findUnique({
+      where: {
+        id: Number(req.params.id),
+      },
+      include: {
+        exercise: {
+          include: {
+            days: {
+              include: {
+                weeks: true,
+              },
             },
           },
         },
-      });
+      },
+    });
 
+    if (req.userId === set.exercise.days[0].weeks[0].userId) {
       set
         ? res.status(200).send(set)
         : res.status(404).send({ error: true, message: `Set not found` });
@@ -71,7 +79,27 @@ router.get(`/:id`, requireUser, async (req, res) => {
 // Updates a specific set through the id of the set
 router.put(`/:id`, requireUser, async (req, res) => {
   try {
-    if (req.userId === Number(req.params.id) || req.isAdmin) {
+    const selectedSet = await prisma.set.findUnique({
+      where: {
+        id: Number(req.params.id),
+      },
+      include: {
+        exercise: {
+          include: {
+            days: {
+              include: {
+                weeks: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (
+      req.userId === selectedSet.exercise.days[0].weeks[0].userId ||
+      req.isAdmin
+    ) {
       const updateSet = await prisma.set.update({
         where: {
           id: Number(req.params.id),
@@ -93,7 +121,27 @@ router.put(`/:id`, requireUser, async (req, res) => {
 // Deletes a whole set by id if permitted
 router.delete(`/:id`, requireUser, async (req, res) => {
   try {
-    if (req.userId === Number(req.params.id) || req.isAdmin) {
+    const selectedSet = await prisma.set.findUnique({
+      where: {
+        id: Number(req.params.id),
+      },
+      include: {
+        exercise: {
+          include: {
+            days: {
+              include: {
+                weeks: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (
+      req.userId === selectedSet.exercise.days[0].weeks[0].userId ||
+      req.isAdmin
+    ) {
       const deleteSet = await prisma.set.delete({
         where: {
           id: Number(req.params.id),

@@ -21,6 +21,7 @@ router.get(`/`, async (req, res) => {
             sets: true,
           },
         },
+        weeks: true,
       },
     });
 
@@ -35,20 +36,21 @@ router.get(`/`, async (req, res) => {
 // Get a specific day by the id
 router.get(`/:id`, requireUser, async (req, res) => {
   try {
-    if (req.userId === Number(req.params.id)) {
-      const day = await prisma.day.findUnique({
-        where: {
-          id: Number(req.params.id),
-        },
-        include: {
-          exercises: {
-            include: {
-              sets: true,
-            },
+    const day = await prisma.day.findUnique({
+      where: {
+        id: Number(req.params.id),
+      },
+      include: {
+        exercises: {
+          include: {
+            sets: true,
           },
         },
-      });
+        weeks: true,
+      },
+    });
 
+    if (req.userId === day.weeks[0].userId) {
       day
         ? res.status(200).send(day)
         : res.status(404).send({ error: true, message: `Day not found` });
@@ -65,7 +67,16 @@ router.get(`/:id`, requireUser, async (req, res) => {
 // Updates a specific day through the id of the day
 router.put(`/:id`, requireUser, async (req, res) => {
   try {
-    if (req.userId === Number(req.params.id) || req.isAdmin) {
+    const selectedDay = await prisma.day.findUnique({
+      where: {
+        id: Number(req.params.id),
+      },
+      include: {
+        weeks: true,
+      },
+    });
+
+    if (req.userId === selectedDay.weeks[0].userId || req.isAdmin) {
       const updateDay = await prisma.day.update({
         where: {
           id: Number(req.params.id),
@@ -86,8 +97,17 @@ router.put(`/:id`, requireUser, async (req, res) => {
 
 // Deletes a day with exercises by day id if permitted
 router.delete(`/:id`, requireUser, async (req, res) => {
+  const selectedDay = await prisma.day.findUnique({
+    where: {
+      id: Number(req.params.id),
+    },
+    include: {
+      weeks: true,
+    },
+  });
+
   try {
-    if (req.userId === Number(req.params.id) || req.isAdmin) {
+    if (req.userId === selectedDay.weeks[0].userId || req.isAdmin) {
       const deleteSets = await prisma.set.deleteMany({
         where: {
           exercise: {

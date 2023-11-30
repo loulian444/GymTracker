@@ -35,24 +35,24 @@ router.get(`/`, async (req, res) => {
 // Get a specific week by the id
 router.get(`/:id`, requireUser, async (req, res) => {
   try {
-    if (req.userId === Number(req.params.id)) {
-      const week = await prisma.week.findUnique({
-        where: {
-          id: Number(req.params.id),
-        },
-        include: {
-          days: {
-            include: {
-              exercises: {
-                include: {
-                  sets: true,
-                },
+    const week = await prisma.week.findUnique({
+      where: {
+        id: Number(req.params.id),
+      },
+      include: {
+        days: {
+          include: {
+            exercises: {
+              include: {
+                sets: true,
               },
             },
           },
         },
-      });
+      },
+    });
 
+    if (req.userId === week.userId) {
       week
         ? res.status(200).send(week)
         : res.status(404).send({ error: true, message: `Week not found` });
@@ -69,7 +69,13 @@ router.get(`/:id`, requireUser, async (req, res) => {
 // Updates a specific week through the id of the week
 router.put(`/:id`, requireUser, async (req, res) => {
   try {
-    if (req.userId === Number(req.params.id) || req.isAdmin) {
+    const selectedWeek = await prisma.week.findUnique({
+      where: {
+        id: Number(req.params.id),
+      },
+    });
+
+    if (req.userId === selectedWeek.userId || req.isAdmin) {
       const updateWeek = await prisma.week.update({
         where: {
           id: Number(req.params.id),
@@ -91,7 +97,13 @@ router.put(`/:id`, requireUser, async (req, res) => {
 // Deletes a whole week with exercises by week id if permitted
 router.delete(`/:id`, requireUser, async (req, res) => {
   try {
-    if (req.userId === Number(req.params.id) || req.isAdmin) {
+    const selectedWeek = await prisma.week.findUnique({
+      where: {
+        id: Number(req.params.id),
+      },
+    });
+
+    if (req.userId === selectedWeek.userId || req.isAdmin) {
       const deleteSets = await prisma.set.deleteMany({
         where: {
           exercise: {
