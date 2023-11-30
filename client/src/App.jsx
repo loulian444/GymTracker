@@ -1,7 +1,9 @@
+import Router from "./components/Router";
+
 const App = () => {
   return (
     <>
-      <h1>Aloha</h1>
+      <Router />
     </>
   );
 };
