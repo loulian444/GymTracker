@@ -30,36 +30,23 @@ router.get(`/`, async (req, res) => {
 // Get user by a specific id. Shows password if the user searched is the same as current user
 router.get(`/:id`, requireUser, async (req, res) => {
   try {
-    if (req.userId === Number(req.params.id)) {
-      const user = await prisma.user.findUnique({
-        where: {
-          id: Number(req.params.id),
-        },
-      });
+    const user = await prisma.user.findUnique({
+      where: {
+        id: Number(req.params.id),
+      },
+      select: {
+        id: true,
+        isAdmin: true,
+        name: true,
+        birthday: true,
+        height: true,
+        weight: true,
+      },
+    });
 
-      user
-        ? res.status(200).send(user)
-        : res.status(404).send({ error: true, message: `User not found` });
-    } else {
-      const user = await prisma.user.findUnique({
-        where: {
-          id: Number(req.params.id),
-        },
-        select: {
-          id: true,
-          username: true,
-          isAdmin: true,
-          name: true,
-          birthday: true,
-          height: true,
-          weight: true,
-        },
-      });
-
-      user
-        ? res.status(200).send(user)
-        : res.status(404).send({ error: true, message: `User not found` });
-    }
+    user
+      ? res.status(200).send(user)
+      : res.status(404).send({ error: true, message: `User not found` });
   } catch (error) {
     res.status(500).send({ error });
   }
