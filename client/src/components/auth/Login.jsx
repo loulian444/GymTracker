@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import LoginForm from "./LoginForm";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = ({ setIsLoggedIn }) => {
   const [loginInfo, setLoginInfo] = useState({});
@@ -60,6 +60,7 @@ const Login = ({ setIsLoggedIn }) => {
       <h1>Login</h1>
       {message ? <p>{message}</p> : null}
       <LoginForm setLoginInfo={setLoginInfo} />
+      <p>Not a member?</p> <Link to={`/register`}>Register</Link>
     </>
   );
 };
