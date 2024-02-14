@@ -1,3 +1,0 @@
-# Gym Tracker
-
-i hope
