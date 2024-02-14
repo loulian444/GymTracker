@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 const Navbar = ({ userData, setIsLoggedIn }) => {
-
   const logOut = () => {
     localStorage.removeItem(`userData`);
     localStorage.removeItem(`token`);
@@ -13,11 +12,7 @@ const Navbar = ({ userData, setIsLoggedIn }) => {
       <section>
         <Link to={`/`}>Home</Link>
         <Link to={`/profile`}>Profile</Link>
-        {userData.name ? (
-          <button onClick={logOut}>Log Out</button>
-        ) : (
-          <Link to={`/login`}>Login</Link>
-        )}
+        {userData.name ? <button onClick={logOut}>Log Out</button> : null}
       </section>
     </>
   );

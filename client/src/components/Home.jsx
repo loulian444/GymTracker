@@ -1,16 +1,14 @@
-import AddExercise from "./workout/AddExercise";
+import Login from "./auth/Login";
+import HomePage from "./HomePage";
 
-const Home = ({ userData }) => {
-
+const Home = ({ userData, setIsLoggedIn }) => {
   return (
     <>
-      {userData.name ? <h1>Hello {userData.name}</h1> : <h1>Hello there</h1>}
-
-      <section>
-        <p>Todays Workout:</p>
-      </section>
-
-      <AddExercise />
+      {userData.name ? (
+        <HomePage userData={userData} />
+      ) : (
+        <Login setIsLoggedIn={setIsLoggedIn} />
+      )}
     </>
   );
 };

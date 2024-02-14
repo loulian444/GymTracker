@@ -9,13 +9,12 @@ const Router = ({ userData, setIsLoggedIn }) => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home userData={userData} />} />
+        <Route
+          path="/"
+          element={<Home userData={userData} setIsLoggedIn={setIsLoggedIn} />}
+        />
         <Route path="/profile" element={<Profile />} />
         <Route path="/add-set" element={<AddSet />} />
-        <Route
-          path="/login"
-          element={<Login setIsLoggedIn={setIsLoggedIn} />}
-        />
         <Route path="/register" element={<Register />} />
       </Routes>
     </>
