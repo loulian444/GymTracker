@@ -1,18 +1,25 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = ({ userData, setIsLoggedIn }) => {
+  const navigate = useNavigate();
+
   const logOut = () => {
     localStorage.removeItem(`userData`);
     localStorage.removeItem(`token`);
     setIsLoggedIn(false);
+    navigate(`/`);
   };
 
   return (
     <>
       <section>
         <Link to={`/`}>Home</Link>
-        <Link to={`/profile`}>Profile</Link>
-        {userData.name ? <button onClick={logOut}>Log Out</button> : null}
+        {userData.name ? (
+          <>
+            <Link to={`/profile`}>Profile</Link>
+            <button onClick={logOut}>Log Out</button>
+          </>
+        ) : null}
       </section>
     </>
   );

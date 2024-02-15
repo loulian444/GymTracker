@@ -3,12 +3,14 @@ import AddExercise from "../workout/AddExercise";
 const HomePage = ({ userData }) => {
   return (
     <>
-      <h1>Hello {userData.name}</h1>
+      <section id="homePageSec">
+        <h1>Hello {userData.name}</h1>
 
-      <AddExercise />
+        <AddExercise />
 
-      <section>
-        <p>Todays Workout:</p>
+        <section>
+          <p>Todays Workout:</p>
+        </section>
       </section>
     </>
   );

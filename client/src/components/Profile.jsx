@@ -1,20 +1,13 @@
-import { useNavigate } from "react-router-dom";
 import AllWorkouts from "./workout/AllWorkouts";
 
-const Profile = () => {
-  const navigate = useNavigate();
-
-  const logoutHandler = () => {
-    localStorage.removeItem(`token`);
-    localStorage.removeItem(`userData`);
-    navigate(`/`);
-  };
-
+const Profile = ({ userData }) => {
   return (
     <>
+    <section id="profileSec">
+
       <h1>Profile Page</h1>
-      <button onClick={logoutHandler}>Logout</button>
-      <AllWorkouts />
+      <AllWorkouts userData={userData} />
+    </section>
     </>
   );
 };
