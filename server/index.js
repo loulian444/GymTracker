@@ -3,7 +3,7 @@ const app = express();
 const jwt = require("jsonwebtoken");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-const PORT = 4440;
+const PORT = 4444;
 // const path = require("path");
 require("dotenv").config();
 

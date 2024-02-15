@@ -11,7 +11,7 @@ const LoginForm = ({ setLoginInfo }) => {
 
   return (
     <>
-      <form onSubmit={loginHandler}>
+      <form onSubmit={loginHandler} id="loginForm">
         <label>
           Username:{" "}
           <input
@@ -19,8 +19,8 @@ const LoginForm = ({ setLoginInfo }) => {
             name="username"
             onChange={(e) => setUsername(e.target.value)}
           />
-        </label>
-
+        </label>{" "}
+        <br />
         <label>
           Password:{" "}
           <input
@@ -29,6 +29,7 @@ const LoginForm = ({ setLoginInfo }) => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
+        <br />
         <button>Login</button>
       </form>
     </>

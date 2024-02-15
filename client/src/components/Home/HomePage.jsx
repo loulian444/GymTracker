@@ -1,4 +1,4 @@
-import AddExercise from "./workout/AddExercise";
+import AddExercise from "../workout/AddExercise";
 
 const HomePage = ({ userData }) => {
   return (

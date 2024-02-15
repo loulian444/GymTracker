@@ -57,10 +57,12 @@ const Login = ({ setIsLoggedIn }) => {
 
   return (
     <>
-      <h1>Login</h1>
-      {message ? <p>{message}</p> : null}
-      <LoginForm setLoginInfo={setLoginInfo} />
-      <p>Not a member?</p> <Link to={`/register`}>Register</Link>
+      <section id="loginSec">
+        <h1>Login</h1>
+        {message ? <p>{message}</p> : null}
+        <LoginForm setLoginInfo={setLoginInfo} />
+        <p>Not a member?</p> <Link to={`/register`}>Register</Link>
+      </section>
     </>
   );
 };

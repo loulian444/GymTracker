@@ -1,4 +1,4 @@
-import Login from "./auth/Login";
+import Login from "../auth/Login";
 import HomePage from "./HomePage";
 
 const Home = ({ userData, setIsLoggedIn }) => {

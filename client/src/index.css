@@ -1,0 +1,25 @@
+body {
+  background-color: bisque;
+}
+
+/* Flexbox */
+.flex {
+  display: flex;
+}
+
+#routerSec {
+  justify-content: center;
+}
+
+/* Login page css */
+#loginSec {
+  text-align: center;
+  width: 200px;
+  padding: 20px;
+  border: 2px solid black;
+  background-color: aliceblue;
+}
+
+#loginForm {
+  text-align: left;
+}
