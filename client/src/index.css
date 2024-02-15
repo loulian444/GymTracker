@@ -12,6 +12,13 @@ body {
   align-items: center;
 }
 
+/* Navbar css */
+#navbar {
+  justify-content: space-around;
+  padding: 10px;
+  border-bottom: 2px solid black;
+}
+
 /* Login page css */
 #loginSec {
   text-align: center;

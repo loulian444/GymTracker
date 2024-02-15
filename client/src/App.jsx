@@ -5,6 +5,8 @@ import Navbar from "./components/bars/Navbar";
 const App = () => {
   const [userData, setUserData] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentWeek, setCurrentWeek] = useState(0);
+  console.log(currentWeek);
 
   useEffect(() => {
     const data = localStorage.getItem(`userData`);
@@ -12,6 +14,7 @@ const App = () => {
     if (data) {
       setIsLoggedIn(true);
       setUserData(JSON.parse(data));
+      setCurrentWeek(JSON.parse(data).weeks[0].week);
     } else {
       setIsLoggedIn(false);
       setUserData({});
@@ -20,8 +23,17 @@ const App = () => {
 
   return (
     <>
-      <Navbar userData={userData} setIsLoggedIn={setIsLoggedIn} />
-      <Router userData={userData} setIsLoggedIn={setIsLoggedIn} />
+      <Navbar
+        userData={userData}
+        setIsLoggedIn={setIsLoggedIn}
+        currentWeek={currentWeek}
+        setCurrentWeek={setCurrentWeek}
+      />
+      <Router
+        userData={userData}
+        setIsLoggedIn={setIsLoggedIn}
+        currentWeek={currentWeek}
+      />
     </>
   );
 };

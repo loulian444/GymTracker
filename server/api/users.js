@@ -41,6 +41,9 @@ router.get(`/:id`, requireUser, async (req, res) => {
         birthday: true,
         height: true,
         weight: true,
+        weeks: {
+          take: -1,
+        },
       },
     });
 
