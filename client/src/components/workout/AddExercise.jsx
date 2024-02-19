@@ -1,7 +1,9 @@
 const AddExercise = () => {
   return (
     <>
-      <button>Add Exercise</button>
+      <section>
+        <button>Add Exercise</button>
+      </section>
     </>
   );
 };

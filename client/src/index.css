@@ -34,9 +34,20 @@ body {
 
 /* Home page css */
 #homePageSec {
+  flex-wrap: wrap;
+  justify-content: center;
   border: 2px solid black;
   padding: 20px;
   width: 50%;
+}
+
+#homePageSec > section {
+  border: 2px solid red;
+  text-align: center;
+}
+
+#homeIntro {
+  width: 100%;
 }
 
 /* Profile page css */

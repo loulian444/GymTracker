@@ -1,18 +1,19 @@
 import AddExercise from "../workout/AddExercise";
+import TodaysWorkout from "../workout/TodaysWorkout";
 
 const HomePage = ({ userData, currentWeek }) => {
   return (
     <>
-      <section id="homePageSec">
-        <h1>Hello {userData.name}</h1>
+      <section id="homePageSec" className="flex">
+        <section id="homeIntro">
+          <h1>Hello {userData.name}</h1>
 
-        <p>Current Week: {currentWeek}</p>
+          <p>Current Week: {currentWeek}</p>
+        </section>
 
         <AddExercise />
 
-        <section>
-          <p>Todays Workout:</p>
-        </section>
+        <TodaysWorkout userData={userData} />
       </section>
     </>
   );

@@ -6,7 +6,6 @@ const App = () => {
   const [userData, setUserData] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentWeek, setCurrentWeek] = useState(0);
-  console.log(currentWeek);
 
   useEffect(() => {
     const data = localStorage.getItem(`userData`);
